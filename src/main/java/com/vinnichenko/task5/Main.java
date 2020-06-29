@@ -13,6 +13,6 @@ public class Main {
         String str = programReader.readFile("src/main/resources/data/data.txt");
         TextService textService = new TextService();
         System.out.println(str);
-        System.out.println(textService.changeSymbol3(str, 'Y', 3));
+        System.out.println(textService.changeWrongLetter3(str));
     }
 }

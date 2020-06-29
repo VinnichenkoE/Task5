@@ -25,7 +25,7 @@ public class TextService {
         String regexReplace = "$1" + letter + "$3";
         return matcher.replaceAll(regexReplace);
     }
-    
+
     public String changeWrongLetter(String line) {
         String regex = "\\b(\\p{LC}*)([Pр])([а])(\\p{LC}+)";
         Pattern pattern = Pattern.compile(regex);
@@ -44,6 +44,35 @@ public class TextService {
         StringBuilder stringBuilder = new StringBuilder();
         for (char letter : chars) {
             stringBuilder.append(letter);
+        }
+        return stringBuilder.toString();
+    }
+
+    public String changeWrongLetter3(String line) {
+        return  line.replaceAll("[Рр][а]", "ро");
+    }
+
+    public String replaceWords(int length, String input, String substring) {
+        String[] words = input.trim().split("\\s");
+        for (int i = 0; i < words.length; i++) {
+            if (words[i].length() == length) {
+                words[i] = substring;
+            }
+        }
+        StringBuilder stringBuilder = new StringBuilder();
+        for (String s : words) {
+            stringBuilder.append(s).append(" ");
+        }
+        return stringBuilder.toString().trim();
+    }
+
+    public String deleteSymbols(String input) {
+        char[] chars = input.toCharArray();
+        StringBuilder stringBuilder = new StringBuilder();
+        for (int i = 0; i < chars.length; i++) {
+            if ((Character.isAlphabetic(chars[i])) || (Character.isSpaceChar(chars[i]))) {
+                stringBuilder.append(chars[i]);
+            }
         }
         return stringBuilder.toString();
     }

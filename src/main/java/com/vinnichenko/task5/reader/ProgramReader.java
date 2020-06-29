@@ -26,7 +26,7 @@ public class ProgramReader {
                 stringBuilder.append(line).append(" ");
             }
         } catch (IOException e) {
-            throw new ProgramException("can not find file");
+            throw new ProgramException("can not find file", e);
         } finally {
             if (br != null) {
                 try {

@@ -4,6 +4,7 @@ import com.vinnichenko.task5.exception.ProgramException;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -37,5 +38,23 @@ public class ProgramReader {
             }
         }
         return stringBuilder.toString().trim();
+    }
+
+    public String readConsole() throws ProgramException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+        System.out.println("Input text");
+        String input;
+        try {
+            input = bufferedReader.readLine();
+        } catch (IOException e) {
+            throw new ProgramException("can not read line", e);
+        } finally {
+            try {
+                bufferedReader.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return input;
     }
 }

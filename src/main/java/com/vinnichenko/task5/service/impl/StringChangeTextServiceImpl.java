@@ -6,7 +6,7 @@ import com.vinnichenko.task5.service.ChangeTextService;
 public class StringChangeTextServiceImpl implements ChangeTextService {
 
     private static final String SEPARATOR = "\\b";
-    private static final String WORD = "\\p{LC}+";
+    private static final String LETTERS = "\\p{LC}+";
 
     @Override
     public String replaceLetterWithSymbol
@@ -18,7 +18,7 @@ public class StringChangeTextServiceImpl implements ChangeTextService {
         String[] charSets = text.split(SEPARATOR);
         StringBuilder stringBuilder = new StringBuilder();
         for (String charSet : charSets) {
-            if (charSet.matches(WORD) && charSet.length() >= position) {
+            if (charSet.matches(LETTERS) && charSet.length() >= position) {
                 String newWord = charSet.substring(0, position - 1) + symbol
                         + charSet.substring(position);
                 stringBuilder.append(newWord);
@@ -51,7 +51,7 @@ public class StringChangeTextServiceImpl implements ChangeTextService {
         String[] charSets = text.split(SEPARATOR);
         StringBuilder stringBuilder = new StringBuilder();
         for (String charSet : charSets) {
-            if (charSet.matches(WORD) && charSet.length() == length) {
+            if (charSet.matches(LETTERS) && charSet.length() == length) {
                 stringBuilder.append(substring);
             } else {
                 stringBuilder.append(charSet);

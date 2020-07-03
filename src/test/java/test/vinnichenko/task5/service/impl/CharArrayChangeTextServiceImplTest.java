@@ -1,26 +1,27 @@
-package com.vinnichenko.task5.service.impl;
+package test.vinnichenko.task5.service.impl;
 
 import com.vinnichenko.task5.exception.ProgramException;
+import com.vinnichenko.task5.service.impl.CharArrayChangeTextServiceImpl;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import static org.testng.Assert.*;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.fail;
 
-public class RegexChangeTextServiceImplTest {
+public class CharArrayChangeTextServiceImplTest {
 
-    RegexChangeTextServiceImpl regexChangeTextService;
+    CharArrayChangeTextServiceImpl charArrayChangeTextService;
 
     @BeforeMethod
     public void setUp() {
-        regexChangeTextService = new RegexChangeTextServiceImpl();
+        charArrayChangeTextService = new CharArrayChangeTextServiceImpl();
     }
 
     @Test(dataProvider = "replaceLetterWithSymbol",
             dataProviderClass = ChangeTextData.class)
     public void replaceLetterWithSymbolTest
-            (String text, int position, char symbol, String expected)
-            throws ProgramException {
-        String actual = regexChangeTextService
+            (String text, int position, char symbol, String expected) throws ProgramException {
+        String actual = charArrayChangeTextService
                 .replaceLetterWithSymbol(text, position, symbol);
         assertEquals(actual, expected);
     }
@@ -30,7 +31,8 @@ public class RegexChangeTextServiceImplTest {
             expectedExceptions = ProgramException.class)
     public void replaceLetterWithSymbolTestException
             (String text, int position, char symbol) throws ProgramException {
-        regexChangeTextService.replaceLetterWithSymbol(text, position, symbol);
+        charArrayChangeTextService
+                .replaceLetterWithSymbol(text, position, symbol);
     }
 
     @Test(dataProvider = "replaceWrongLetter",
@@ -38,7 +40,7 @@ public class RegexChangeTextServiceImplTest {
     public void replaceWrongLetterTest
             (String text, char oldLetter, char newLetter,
              char previousLetter, String expected) throws ProgramException {
-        String actual = regexChangeTextService
+        String actual = charArrayChangeTextService
                 .replaceWrongLetter(text, oldLetter, newLetter, previousLetter);
         assertEquals(actual, expected);
     }
@@ -46,7 +48,8 @@ public class RegexChangeTextServiceImplTest {
     @Test(expectedExceptions = ProgramException.class)
     public void replaceWrongLetterTestException() throws ProgramException {
         String nullText = null;
-        regexChangeTextService.replaceWrongLetter(nullText, 'a', 'o', 'h');
+        charArrayChangeTextService
+                .replaceWrongLetter(nullText, 'a', 'o', 'h');
     }
 
     @Test(dataProvider = "replaceWordWithSubstring",
@@ -54,7 +57,7 @@ public class RegexChangeTextServiceImplTest {
     public void replaceWordWithSubstringTest
             (String text, int length, String substring, String expected)
             throws ProgramException {
-        String actual = regexChangeTextService
+        String actual = charArrayChangeTextService
                 .replaceWordWithSubstring(text, length, substring);
         assertEquals(actual, expected);
     }
@@ -65,6 +68,6 @@ public class RegexChangeTextServiceImplTest {
     public void replaceWordWithSubstringTestException
             (String text, int length, String substring)
             throws ProgramException {
-        regexChangeTextService.replaceWordWithSubstring(text, length, substring);
+        charArrayChangeTextService.replaceWordWithSubstring(text, length, substring);
     }
 }

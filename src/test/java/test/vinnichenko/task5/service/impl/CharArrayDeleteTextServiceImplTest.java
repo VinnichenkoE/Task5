@@ -1,6 +1,7 @@
-package com.vinnichenko.task5.service.impl;
+package test.vinnichenko.task5.service.impl;
 
 import com.vinnichenko.task5.exception.ProgramException;
+import com.vinnichenko.task5.service.impl.CharArrayDeleteTextServiceImpl;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 

@@ -1,6 +1,7 @@
-package com.vinnichenko.task5.reader;
+package test.vinnichenko.task5.reader;
 
 import com.vinnichenko.task5.exception.ProgramException;
+import com.vinnichenko.task5.reader.ProgramReader;
 import org.testng.annotations.Test;
 
 import java.io.ByteArrayInputStream;

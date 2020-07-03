@@ -18,14 +18,16 @@ public class CharArrayDeleteTextServiceImplTest {
 
     @Test(dataProvider = "deleteSymbolsExceptSpaces",
             dataProviderClass = DeleteTextData.class)
-    public void deleteSymbolsExceptSpacesTest(String text, String expected) throws ProgramException {
+    public void deleteSymbolsExceptSpacesTest(String text, String expected)
+            throws ProgramException {
         String actual = charArrayDeleteTextService
                 .deleteSymbolsExceptSpaces(text);
         assertEquals(actual, expected);
     }
 
     @Test(expectedExceptions = ProgramException.class)
-    public void deleteSymbolsExceptSpacesTestException() throws ProgramException {
+    public void deleteSymbolsExceptSpacesTestException()
+            throws ProgramException {
         String nullText = null;
         charArrayDeleteTextService.deleteSymbolsExceptSpaces(nullText);
     }

@@ -20,7 +20,8 @@ public class CharArrayChangeTextServiceImplTest {
     @Test(dataProvider = "replaceLetterWithSymbol",
             dataProviderClass = ChangeTextData.class)
     public void replaceLetterWithSymbolTest
-            (String text, int position, char symbol, String expected) throws ProgramException {
+            (String text, int position, char symbol, String expected)
+            throws ProgramException {
         String actual = charArrayChangeTextService
                 .replaceLetterWithSymbol(text, position, symbol);
         assertEquals(actual, expected);
@@ -68,6 +69,7 @@ public class CharArrayChangeTextServiceImplTest {
     public void replaceWordWithSubstringTestException
             (String text, int length, String substring)
             throws ProgramException {
-        charArrayChangeTextService.replaceWordWithSubstring(text, length, substring);
+        charArrayChangeTextService
+                .replaceWordWithSubstring(text, length, substring);
     }
 }

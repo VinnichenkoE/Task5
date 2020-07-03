@@ -1,11 +1,18 @@
 package com.vinnichenko.task5.service.impl;
 
+import com.vinnichenko.task5.exception.ProgramException;
 import com.vinnichenko.task5.service.ChangeTextService;
 
 public class CharArrayChangeTextServiceImpl implements ChangeTextService {
+
     @Override
-    public String replaceLetterWithSymbol(String line, int position, char symbol) {
-        char[] chars = line.toCharArray();
+    public String replaceLetterWithSymbol
+            (String text, int position, char symbol)
+            throws ProgramException {
+        if (text == null || position <= 0) {
+            throw new ProgramException("incorrect parameters");
+        }
+        char[] chars = text.toCharArray();
         int begin;
         int end = 0;
         for (int i = 0; i < chars.length; i++) {
@@ -13,7 +20,8 @@ public class CharArrayChangeTextServiceImpl implements ChangeTextService {
             if (begin >= end && Character.isLetter(chars[begin])) {
                 end = begin;
                 for (int j = begin; j < chars.length; j++) {
-                    if (!Character.isLetter(chars[end])) {
+                    if (!(Character.isLetter(chars[end])
+                            || chars[end] == '-')) {
                         break;
                     }
                     end++;
@@ -23,40 +31,40 @@ public class CharArrayChangeTextServiceImpl implements ChangeTextService {
                 }
             }
         }
-        StringBuilder stringBuilder = new StringBuilder();
-        for (char ch : chars) {
-            stringBuilder.append(ch);
-        }
-        return stringBuilder.toString();
+        return String.valueOf(chars);
     }
 
     @Override
-    public String replaceLetterAfterLetter(String line, char oldLetter, char newLetter, char previousLetter) {
-        char[] chars = line.toLowerCase().toCharArray();
+    public String replaceWrongLetter
+            (String text, char oldLetter, char newLetter, char previousLetter)
+            throws ProgramException {
+        if (text == null) {
+            throw new ProgramException("incorrect parameter");
+        }
+        char[] chars = text.toCharArray();
         for (int i = 0; i < chars.length - 1; i++) {
             if (chars[i] == previousLetter && chars[i + 1] == oldLetter) {
                 chars[i + 1] = newLetter;
             }
         }
-        StringBuilder stringBuilder = new StringBuilder();
-        for (char ch : chars) {
-            stringBuilder.append(ch);
-        }
-        return stringBuilder.toString();
+        return String.valueOf(chars);
     }
 
     @Override
-    public String replaceWordByLengthWithSubstring(String line, int length, String substring) {
-        char[] chars = line.toCharArray();
+    public String replaceWordWithSubstring
+            (String text, int length, String substring)
+            throws ProgramException {
+        if (text == null || length <= 0 || substring == null) {
+            throw new ProgramException("incorrect parameters");
+        }
+        char[] chars = text.toCharArray();
         int begin;
         int end = 0;
         StringBuilder stringBuilder = new StringBuilder();
         for (int i = 0; i < chars.length; i++) {
             begin = i;
             if (begin >= end && Character.isLetter(chars[begin])) {
-                for (int k = end; k < begin; k++) {
-                    stringBuilder.append(chars[k]);
-                }
+                stringBuilder.append(chars, end, (begin - end));
                 end = begin;
                 for (int j = begin; j < chars.length; j++) {
                     if (!Character.isLetter(chars[end])) {
@@ -67,16 +75,12 @@ public class CharArrayChangeTextServiceImpl implements ChangeTextService {
                 if ((end - begin) == length) {
                     stringBuilder.append(substring);
                 } else {
-                    for (int l = begin; l < end; l++) {
-                        stringBuilder.append(chars[l]);
-                    }
+                    stringBuilder.append(chars, begin, (end - begin));
                 }
             }
         }
         if (end < chars.length) {
-            for (int f = end; f < chars.length; f++) {
-                stringBuilder.append(chars[f]);
-            }
+            stringBuilder.append(chars, end, (chars.length - end));
         }
         return stringBuilder.toString();
     }

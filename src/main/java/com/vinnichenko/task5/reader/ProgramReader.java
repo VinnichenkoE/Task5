@@ -27,7 +27,7 @@ public class ProgramReader {
                 stringBuilder.append(line).append(" ");
             }
         } catch (IOException e) {
-            throw new ProgramException("can not find file", e);
+            throw new ProgramException("can not read file", e);
         } finally {
             if (br != null) {
                 try {
@@ -42,12 +42,20 @@ public class ProgramReader {
 
     public String readConsole() throws ProgramException {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
-        System.out.println("Input text");
+        System.out.println("Input text or \"exit\" to break");
         String input;
+        StringBuilder stringBuilder = new StringBuilder();
         try {
-            input = bufferedReader.readLine();
+            while (true) {
+                input = bufferedReader.readLine();
+                if (input.equalsIgnoreCase("exit")) {
+                    break;
+                } else {
+                    stringBuilder.append(input);
+                }
+            }
         } catch (IOException e) {
-            throw new ProgramException("can not read line", e);
+            throw new ProgramException("can not read from console", e);
         } finally {
             try {
                 bufferedReader.close();
@@ -55,6 +63,6 @@ public class ProgramReader {
                 e.printStackTrace();
             }
         }
-        return input;
+        return stringBuilder.toString();
     }
 }

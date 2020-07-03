@@ -1,1 +1,3 @@
-<< орел;? папа, елка, мама!!! петро алексей... клава. раждество парад кто-нибудь -если
+If one author has modified another
+author's change, you will see the changes hierarchically arranged
+with a plus sign for opening up the hierarchy.

@@ -1,30 +1,62 @@
 package com.vinnichenko.task5.service.impl;
 
+import com.vinnichenko.task5.exception.ProgramException;
 import com.vinnichenko.task5.service.ChangeTextService;
 
 public class StringChangeTextServiceImpl implements ChangeTextService {
-    @Override
-    public String replaceLetterWithSymbol(String line, int position, char symbol) {
-        String regex = "(\\p{LC}{" + (position - 1) + "})(\\p{LC})(\\p{LC}*)";
-        String replacement = "$1" + symbol + "$3";
-        return line.replaceAll(regex, replacement);
-    }
+
+    private static final String SEPARATOR = "\\b";
+    private static final String WORD = "\\p{LC}+";
 
     @Override
-    public String replaceLetterAfterLetter(String line, char oldLetter, char newLetter, char previousLetter) {
-        String incorrectLetters = String.valueOf(previousLetter) + oldLetter;
-        String newLetters = String.valueOf(previousLetter) + newLetter;
-        String result = "";
-        if (line.contains(incorrectLetters)) {
-            result = line.replace(incorrectLetters, newLetters);
+    public String replaceLetterWithSymbol
+            (String text, int position, char symbol)
+            throws ProgramException {
+        if (text == null || position <= 0) {
+            throw new ProgramException("incorrect parameters");
         }
-        return result;
+        String[] charSets = text.split(SEPARATOR);
+        StringBuilder stringBuilder = new StringBuilder();
+        for (String charSet : charSets) {
+            if (charSet.matches(WORD) && charSet.length() >= position) {
+                String newWord = charSet.substring(0, position - 1) + symbol
+                        + charSet.substring(position);
+                stringBuilder.append(newWord);
+            } else {
+                stringBuilder.append(charSet);
+            }
+        }
+        return stringBuilder.toString();
     }
 
     @Override
-    public String replaceWordByLengthWithSubstring(String line, int length, String substring) {
-        String regex = "\\b(\\p{LC}{" + length + "})(\\p{Punct}*\\s+)";
-        String replacement = substring + "$2";
-        return line.replaceAll(regex, replacement);
+    public String replaceWrongLetter
+            (String text, char oldLetter, char newLetter, char previousLetter)
+            throws ProgramException {
+        if (text == null) {
+            throw new ProgramException("incorrect parameter");
+        }
+        String incorrectLetters = String.valueOf(previousLetter) + oldLetter;
+        String correctLetters = String.valueOf(previousLetter) + newLetter;
+        return text.replace(incorrectLetters, correctLetters);
+    }
+
+    @Override
+    public String replaceWordWithSubstring
+            (String text, int length, String substring)
+            throws ProgramException {
+        if (text == null || length <= 0 || substring == null) {
+            throw new ProgramException("incorrect parameters");
+        }
+        String[] charSets = text.split(SEPARATOR);
+        StringBuilder stringBuilder = new StringBuilder();
+        for (String charSet : charSets) {
+            if (charSet.matches(WORD) && charSet.length() == length) {
+                stringBuilder.append(substring);
+            } else {
+                stringBuilder.append(charSet);
+            }
+        }
+        return stringBuilder.toString();
     }
 }
